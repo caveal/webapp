@@ -62,37 +62,18 @@ public class CategoriaAPI extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            this.action = request.getParameter("action") == null ? "" : request.getParameter("action");
-            switch (this.action) {
-                case "paginarCategoria":
-                    /*
-                    BEAN_PAGINATION beanPagination = this.categoriaDAO.getPagination(getParameters(request));
-                    BEAN_CRUD beanCrud = new BEAN_CRUD(beanPagination);
-                    processCategoria(beanCrud, response);
-                     */
-                    processCategoria(new BEAN_CRUD(this.categoriaDAO.getPagination(getParameters(request))), response);
-                    break;
-                case "addCategoria":
-                    /*
-                    BEAN_CRUD beanCrud = this.categoriaDAO.add(getCategoria(request), getParameters(request));
-                    processCategoria(beanCrud, response);
-                     */
-                    processCategoria(this.categoriaDAO.add(getCategoria(request), getParameters(request)), response);
-                    break;
-                case "updateCategoria":
-                    processCategoria(this.categoriaDAO.update(getCategoria(request), getParameters(request)), response);
-                    break;
-                case "deleteCategoria":
-                    processCategoria(this.categoriaDAO.delete(Integer.parseInt(request.getParameter("txtIdCategoriaER")), getParameters(request)), response);
-                    break;
-                default:
-                    request.getRequestDispatcher("/jsp_app/mantenimiento/categoria.jsp").forward(request, response);
-                    break;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoriaAPI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    	try {
+			if(this.pool.getConnection()!=null){
+				LOG.info("Conexion Exitosa");
+			}
+			else {
+				LOG.info("Conexion fallida");
+			}
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			Logger.getLogger(CategoriaAPI.class.getName()).log(Level.SEVERE,null,ex);
+		}
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -107,12 +88,15 @@ public class CategoriaAPI extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.session = request.getSession();
-        if (this.session.getAttribute("usuario") == null) {
-            response.sendRedirect("login");
-        } else {
-            processRequest(request, response);
-        }
+    	
+    	processRequest(request, response);
+    	
+//        this.session = request.getSession();
+//        if (this.session.getAttribute("usuario") == null) {
+//            response.sendRedirect("login");
+//        } else {
+//            processRequest(request, response);
+//        }
     }
 
     /**
@@ -126,12 +110,15 @@ public class CategoriaAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.session = request.getSession();
-        if (this.session.getAttribute("usuario") == null) {
-            response.sendRedirect("login");
-        } else {
-            processRequest(request, response);
-        }
+    	
+    	processRequest(request, response);
+    	
+//        this.session = request.getSession();
+//        if (this.session.getAttribute("usuario") == null) {
+//            response.sendRedirect("login");
+//        } else {
+//            processRequest(request, response);
+//        }
     }
 
     private Categoria getCategoria(HttpServletRequest request) {
