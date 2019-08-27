@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>ProductoAPI</servlet-name>
+  	<display-name>ProductoAPI</display-name>
+  	<description>Servlet de Productos</description>
+  	<servlet-class>com.jcode.myapp.api.ProductoAPI</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ProductoAPI</servlet-name>
+  	<url-pattern>/productos</url-pattern>
+  </servlet-mapping>
 </web-app>
